@@ -1,11 +1,17 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
+import Form from 'react-bootstrap/Form';
  
 export default function Create() {
  const [form, setForm] = useState({
-   name: "",
-   position: "",
-   level: "",
+   matricul: "",
+   nom: "",
+   prenom: "",
+   ecole: "",
+   ressource: "",
+   duree: "",
+   date: "",
+   status: "En Attente",
  });
  const navigate = useNavigate();
  
@@ -35,7 +41,14 @@ export default function Create() {
      return;
    });
  
-   setForm({ name: "", position: "", level: "" });
+   setForm({ matricul: "",
+   nom: "",
+   prenom: "",
+   ecole: "",
+   ressource: "",
+   duree: "",
+   date: "",
+   status: "En Attente", });
    navigate("/");
  }
  
@@ -45,63 +58,95 @@ export default function Create() {
      <h3>Create New Record</h3>
      <form onSubmit={onSubmit}>
        <div className="form-group">
-         <label htmlFor="name">Name</label>
+         <label htmlFor="matricul">Matricul</label>
          <input
            type="text"
            className="form-control"
-           id="name"
-           value={form.name}
-           onChange={(e) => updateForm({ name: e.target.value })}
+           id="matricul"
+           value={form.matricul}
+           onChange={(e) => updateForm({ matricul: e.target.value })}
          />
        </div>
        <div className="form-group">
-         <label htmlFor="position">Position</label>
+         <label htmlFor="nom">Nom</label>
          <input
            type="text"
            className="form-control"
-           id="position"
-           value={form.position}
-           onChange={(e) => updateForm({ position: e.target.value })}
+           id="nom"
+           value={form.nom}
+           onChange={(e) => updateForm({ nom: e.target.value })}
          />
        </div>
+       <div className="form-group">
+         <label htmlFor="prenom">Prenom</label>
+         <input
+           type="text"
+           className="form-control"
+           id="prenom"
+           value={form.prenom}
+           onChange={(e) => updateForm({ prenom: e.target.value })}
+         />
+       </div>
+       <label htmlFor="ecole">Ecole</label>
        <div className="form-group">
          <div className="form-check form-check-inline">
            <input
              className="form-check-input"
              type="radio"
-             name="positionOptions"
-             id="positionIntern"
-             value="Intern"
-             checked={form.level === "Intern"}
-             onChange={(e) => updateForm({ level: e.target.value })}
+             name="ecoleOptions"
+             id="ecoleEIDIA"
+             value="EIDIA"
+             checked={form.ecole === "EIDIA"}
+             onChange={(e) => updateForm({ ecole: e.target.value })}
            />
-           <label htmlFor="positionIntern" className="form-check-label">Intern</label>
+           <label htmlFor="ecoleEIDIA" className="form-check-label">EIDIA</label>
          </div>
          <div className="form-check form-check-inline">
            <input
              className="form-check-input"
              type="radio"
-             name="positionOptions"
-             id="positionJunior"
-             value="Junior"
-             checked={form.level === "Junior"}
-             onChange={(e) => updateForm({ level: e.target.value })}
+             name="ecoleOptions"
+             id="ecoleEMADU"
+             value="EMADU"
+             checked={form.ecole === "EMADU"}
+             onChange={(e) => updateForm({ ecole: e.target.value })}
            />
-           <label htmlFor="positionJunior" className="form-check-label">Junior</label>
+           <label htmlFor="ecoleEMADU" className="form-check-label">EMADU</label>
          </div>
          <div className="form-check form-check-inline">
            <input
              className="form-check-input"
              type="radio"
-             name="positionOptions"
-             id="positionSenior"
-             value="Senior"
-             checked={form.level === "Senior"}
-             onChange={(e) => updateForm({ level: e.target.value })}
+             name="ecoleOptions"
+             id="ecoleEBS"
+             value="EBS"
+             checked={form.ecole === "EBS"}
+             onChange={(e) => updateForm({ ecole: e.target.value })}
            />
-           <label htmlFor="positionSenior" className="form-check-label">Senior</label>
+           <label htmlFor="ecoleEBS" className="form-check-label">EBS</label>
          </div>
        </div>
+       <label htmlFor="resource">Ressource</label>
+       <div className="form-group">
+         <Form.Select aria-label="Default select example" onSelect={(e) => updateForm({ ressource: e.target.value })} onChange={(e) => updateForm({ ressource: e.target.value })}>
+            <option>Selectionner un Terrain </option>
+            <option value="Football" selected={form.ressource === "football"}>Terrain Football</option>
+            <option value="Basketball" selected={form.ressource === "basketball"}>Terrain Basketball</option>
+            <option value="Handball" selected={form.ressource === "handball"}>Terrain Handball</option>
+          </Form.Select>
+       </div>
+       <label htmlFor="resource">Durée</label>
+       <div className="col-md-12">
+                        <Form.Group controlId="duedate" >
+                            <Form.Control type="time" name="date" placeholder="Due time" />
+                        </Form.Group>
+        </div>
+       <label htmlFor="resource">Date</label>
+       <div className="col-md-12">
+                        <Form.Group controlId="duedate" >
+                            <Form.Control type="date" name="date" placeholder="Due date" />
+                        </Form.Group>
+                    </div>
        <div className="form-group">
          <input
            type="submit"

@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.css";
  
 // We import NavLink to utilize the react router.
 import { NavLink } from "react-router-dom";
+import NavDropdown from 'react-bootstrap/NavDropdown';
  
 // Here, we display our Navbar
 export default function Navbar() {
@@ -30,21 +31,25 @@ export default function Navbar() {
          <ul className="navbar-nav mr-auto">
            <li className="nav-item ">
            <NavLink className="nav-link" to="/">
-               Home 
+               Acceuil 
              </NavLink>
-           </li><li className="nav-item ">
-             <NavLink className="nav-link" to="/create">
-               Create Account
+           </li>
+           <li className="nav-item ">
+           <NavDropdown title="Demande" id="basic-nav-dropdown">
+              <NavDropdown.Item href="/create">Salle Sport</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.2">Terrain </NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.3">Bibliothèque</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.4">Computer</NavDropdown.Item>
+            </NavDropdown>
+           </li>
+           <li className="nav-item ">
+             <NavLink className="nav-link" to="/record">
+                Liste Demandes
              </NavLink>
            </li>
            <li className="nav-item ">
              <NavLink className="nav-link" to="/record">
-               User List
-             </NavLink>
-           </li>
-           <li className="nav-item ">
-             <NavLink className="nav-link" to="/record">
-               Request List
+                Liste Utilisateurs 
              </NavLink>
            </li>
            <li className="nav-item ">

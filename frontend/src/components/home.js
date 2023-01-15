@@ -51,6 +51,17 @@ function Home() {
           </p>
         </Carousel.Caption>
       </Carousel.Item>
+      <Carousel.Item>
+        <img
+          className="d-block w-100"
+          src="biblio.jpg"
+          alt="Five slide"
+        />
+        <Carousel.Caption>
+          <h5>Five slide label</h5>
+          <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+        </Carousel.Caption>
+      </Carousel.Item>
     </Carousel>
   );
 }
