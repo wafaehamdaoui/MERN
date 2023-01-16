@@ -49,7 +49,7 @@ export default function Navbar() {
            </li>
            <li className="nav-item ">
              <NavLink className="nav-link" to="/about">
-                 A propos 
+                 Liste Utilisateurs 
              </NavLink>
            </li>
            <li className="nav-item ">

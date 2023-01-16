@@ -55,10 +55,10 @@ export default function Create() {
  // This following section will display the form that takes the input from the user.
  return (
    <div>
-     <h3>Create New Record</h3>
+     <h3 style={{marginLeft:"20%"}}>  Demander une Ressource</h3>
      <form onSubmit={onSubmit}>
-       <div className="form-group">
-         <label htmlFor="matricul">Matricul</label>
+       <div className="col-md-6" style={{marginLeft:"20%"}}>
+         <label htmlFor="matricul" >Matricul</label>
          <input
            type="text"
            className="form-control"
@@ -67,8 +67,8 @@ export default function Create() {
            onChange={(e) => updateForm({ matricul: e.target.value })}
          />
        </div>
-       <div className="form-group">
-         <label htmlFor="nom">Nom</label>
+       <div className="col-md-6" style={{marginLeft:"20%"}}>
+         <label htmlFor="nom" >Nom</label>
          <input
            type="text"
            className="form-control"
@@ -77,7 +77,7 @@ export default function Create() {
            onChange={(e) => updateForm({ nom: e.target.value })}
          />
        </div>
-       <div className="form-group">
+       <div className="col-md-6" style={{marginLeft:"20%"}}>
          <label htmlFor="prenom">Prenom</label>
          <input
            type="text"
@@ -87,8 +87,8 @@ export default function Create() {
            onChange={(e) => updateForm({ prenom: e.target.value })}
          />
        </div>
-       <label htmlFor="ecole">Ecole</label>
-       <div className="form-group">
+       <label htmlFor="ecole" style={{marginLeft:"20%"}}>Ecole</label>
+       <div className="col-md-6" style={{marginLeft:"20%"}}>
          <div className="form-check form-check-inline">
            <input
              className="form-check-input"
@@ -118,6 +118,30 @@ export default function Create() {
              className="form-check-input"
              type="radio"
              name="ecoleOptions"
+             id="ecoleEPS"
+             value="EPS"
+             checked={form.ecole === "EPS"}
+             onChange={(e) => updateForm({ ecole: e.target.value })}
+           />
+           <label htmlFor="ecoleEPS" className="form-check-label">EPS</label>
+         </div>
+         <div className="form-check form-check-inline">
+           <input
+             className="form-check-input"
+             type="radio"
+             name="ecoleOptions"
+             id="ecoleFEP"
+             value="FEP"
+             checked={form.ecole === "FEP"}
+             onChange={(e) => updateForm({ ecole: e.target.value })}
+           />
+           <label htmlFor="ecoleFEP" className="form-check-label">FEP</label>
+         </div>
+         <div className="form-check form-check-inline">
+           <input
+             className="form-check-input"
+             type="radio"
+             name="ecoleOptions"
              id="ecoleEBS"
              value="EBS"
              checked={form.ecole === "EBS"}
@@ -126,31 +150,40 @@ export default function Create() {
            <label htmlFor="ecoleEBS" className="form-check-label">EBS</label>
          </div>
        </div>
-       <label htmlFor="resource">Ressource</label>
-       <div className="form-group">
+       <label htmlFor="resource" style={{marginLeft:"20%"}}>Ressource</label>
+       <div className="col-md-6" style={{marginLeft:"20%"}}>
          <Form.Select aria-label="Default select example" onSelect={(e) => updateForm({ ressource: e.target.value })} onChange={(e) => updateForm({ ressource: e.target.value })}>
-            <option>Selectionner un Terrain </option>
-            <option value="Football" selected={form.ressource === "football"}>Terrain Football</option>
-            <option value="Basketball" selected={form.ressource === "basketball"}>Terrain Basketball</option>
-            <option value="Handball" selected={form.ressource === "handball"}>Terrain Handball</option>
+            <option>Selectionner une Ressource </option>
+         <option value="Foot-ball" selected={form.ressource === "Foot-ball"}>Terrain Foot-ball</option>
+         <option value="Basket-ball" selected={form.ressource === "Basket-ball"}>Terrain Basket-ball</option>
+         <option value="Hand-ball" selected={form.ressource === "Hand-ball"}>Terrain Hand-ball</option>
+         <option value="Volley-ball" selected={form.ressource === "Volley-ball"}>Terrain Volley-ball</option>
+         <option value="Tennis" selected={form.ressource === "Tennis"}>Tennis de table</option>
+         <option value="Gym" selected={form.ressource === "Gym"}>Salle multisports</option>
+         <option value="Bibliothèque" selected={form.ressource === "Bibliothèque"}>Espace Bibliothèque</option>
+         <option value="Laboratoire" selected={form.ressource === "Laboratoire"}> Salle Informatique AI</option>
+         <option value="Laboratoire" selected={form.ressource === "Laboratoire"}> Salle Informatique Robotique</option>
+         <option value="Laboratoire" selected={form.ressource === "Laboratoire"}> Salle Informatique RV</option>
+         <option value="Laboratoire" selected={form.ressource === "Laboratoire"}> Salle Informatique B1</option>
+            
           </Form.Select>
        </div>
-       <label htmlFor="resource">Durée</label>
-       <div className="col-md-12">
+       <label htmlFor="resource" style={{marginLeft:"20%"}}>Durée</label>
+       <div className="col-md-6" style={{marginLeft:"20%"}}>
                         <Form.Group controlId="duedate" >
-                            <Form.Control type="time" name="date" placeholder="Due time" />
+                            <Form.Control type="time" name="time" placeholder="Due time" onSelect={(e) => updateForm({ duree: e.target.value })} />
                         </Form.Group>
         </div>
-       <label htmlFor="resource">Date</label>
-       <div className="col-md-12">
+       <label htmlFor="resource" style={{marginLeft:"20%"}}>Date</label>
+       <div className="col-md-6" style={{marginLeft:"20%"}}>
                         <Form.Group controlId="duedate" >
-                            <Form.Control type="date" name="date" placeholder="Due date" />
+                            <Form.Control type="date" name="date" placeholder="Due date" onSelect={(e) => updateForm({ date: e.target.value })}/>
                         </Form.Group>
                     </div>
-       <div className="form-group">
+       <div className="col-md-4" style={{marginLeft:"40%",marginTop:"2%"}}>
          <input
            type="submit"
-           value="Create person"
+           value="Create Demande"
            className="btn btn-primary"
          />
        </div>
