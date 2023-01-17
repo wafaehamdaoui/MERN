@@ -23,6 +23,17 @@ recordRoutes.route("/record").get(function (req, res) {
      res.json(result);
    });
 });
+
+recordRoutes.route("/login").get(function (req, res) {
+  let db_connect = dbo.getDb("users");
+  db_connect
+    .collection("users")
+    .find({})
+    .toArray(function (err, result) {
+      if (err) throw err;
+      res.json(result);
+    });
+ });
  
 // This section will help you get a single record by id
 recordRoutes.route("/record/:id").get(function (req, res) {
@@ -55,6 +66,18 @@ recordRoutes.route("/record/add").post(function (req, response) {
  });
 });
  
+recordRoutes.route("/register").post(function (req, response) {
+  let db_connect = dbo.getDb();
+  let myobj = {
+    username: req.body.username,
+    email: req.body.email,
+    password: req.body.password,
+  };
+  db_connect.collection("users").insertOne(myobj, function (err, res) {
+    if (err) throw err;
+    response.json(res);
+  });
+ });
 // This section will help you update a record by id.
 recordRoutes.route("/update/:id").post(function (req, response) {
  let db_connect = dbo.getDb();

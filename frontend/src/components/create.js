@@ -27,14 +27,14 @@ export default function Create() {
    e.preventDefault();
  
    // When a post request is sent to the create url, we'll add a new record to the database.
-   const newPerson = { ...form };
+   const newDemande = { ...form };
  
    await fetch("http://localhost:5000/record/add", {
      method: "POST",
      headers: {
        "Content-Type": "application/json",
      },
-     body: JSON.stringify(newPerson),
+     body: JSON.stringify(newDemande),
    })
    .catch(error => {
      window.alert(error);

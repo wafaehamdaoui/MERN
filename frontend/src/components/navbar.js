@@ -6,6 +6,7 @@ import "bootstrap/dist/css/bootstrap.css";
 // We import NavLink to utilize the react router.
 import { NavLink } from "react-router-dom";
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import { Image } from "react-bootstrap";
  
 // Here, we display our Navbar
 export default function Navbar() {
@@ -13,7 +14,7 @@ export default function Navbar() {
    <div>
      <nav className="navbar navbar-expand-lg navbar-light bg-light">
        <NavLink className="navbar-brand" to="/">
-       <img style={{"width" : 80 + '%'}} src="logo.png"></img>
+       <Image style={{"width" : 80 + '%'}} src="logo.png"></Image>
        </NavLink>
        <button
          className="navbar-toggler"
@@ -30,7 +31,7 @@ export default function Navbar() {
        <div className="collapse navbar-collapse" id="navbarSupportedContent">
          <ul className="navbar-nav mr-auto">
            <li className="nav-item ">
-           <NavLink className="nav-link" to="/">
+           <NavLink className="nav-link" to="/home">
                Acceuil 
              </NavLink>
            </li>
