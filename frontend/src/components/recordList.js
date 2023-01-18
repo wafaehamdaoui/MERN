@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
- 
+import { useNavigate } from 'react-router-dom'
 const Record = (props) => (
  <tr>
+   <td>{props.record._id}</td>
    <td>{props.record.matricul}</td>
    <td>{props.record.nom}</td>
    <td>{props.record.prenom}</td>
@@ -12,7 +13,7 @@ const Record = (props) => (
    <td>{props.record.date}</td>
    <td>{props.record.status}</td>
    <td>
-     <Link className="btn btn-link" to={`/edit/${props.record._id}`}>Edit</Link> |
+     <Link className="btn btn-link" to={`/student/edit/${props.record._id}`}>Edit</Link> |
      <button className="btn btn-link"
        onClick={() => {
          props.deleteRecord(props.record._id);
@@ -26,6 +27,7 @@ const Record = (props) => (
  
 export default function RecordList() {
  const [records, setRecords] = useState([]);
+ const navigate = useNavigate();
  
  // This method fetches the records from the database.
  useEffect(() => {
@@ -35,6 +37,7 @@ export default function RecordList() {
      if (!response.ok) {
        const message = `An error occurred: ${response.statusText}`;
        window.alert(message);
+       navigate("/");
        return;
      }
  
@@ -81,10 +84,11 @@ export default function RecordList() {
            <th>Matricul</th>
            <th>Nom</th>
            <th>Prénom</th>
+           <th>Ecole</th>
            <th>Ressource</th>
            <th>Durée</th>
            <th>Date</th>
-           
+
            <th>Status</th>
            <th>Action</th>
          </tr>

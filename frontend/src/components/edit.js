@@ -32,7 +32,7 @@ export default function Edit() {
      const record = await response.json();
      if (!record) {
        window.alert(`Record with id ${id} not found`);
-       navigate("/");
+       navigate("/admin/record");
        return;
      }
  
@@ -73,7 +73,7 @@ export default function Edit() {
      },
    });
  
-   navigate("/");
+   navigate("/admin/record");
  }
  
  // This following section will display the form that takes input from the user to update the data.

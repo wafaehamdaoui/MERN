@@ -31,25 +31,25 @@ export default function Navbar() {
        <div className="collapse navbar-collapse" id="navbarSupportedContent">
          <ul className="navbar-nav mr-auto">
            <li className="nav-item ">
-           <NavLink className="nav-link" to="/home">
+           <NavLink className="nav-link" to="/student">
                Acceuil 
              </NavLink>
            </li>
            <li className="nav-item ">
            <NavDropdown title="Demande" id="basic-nav-dropdown">
-              <NavDropdown.Item href="/create">Salle Sport</NavDropdown.Item>
-              <NavDropdown.Item href="/create">Terrain </NavDropdown.Item>
-              <NavDropdown.Item href="/create">Bibliothèque</NavDropdown.Item>
-              <NavDropdown.Item href="/create">Computer</NavDropdown.Item>
+              <NavDropdown.Item href="student/create">Salle Sport</NavDropdown.Item>
+              <NavDropdown.Item href="student/create">Terrain </NavDropdown.Item>
+              <NavDropdown.Item href="student/create">Bibliothèque</NavDropdown.Item>
+              <NavDropdown.Item href="student/create">Computer</NavDropdown.Item>
             </NavDropdown>
            </li>
            <li className="nav-item ">
-             <NavLink className="nav-link" to="/record">
+             <NavLink className="nav-link" to="/student/record">
                 Liste Demandes
              </NavLink>
            </li>
            <li className="nav-item ">
-             <NavLink className="nav-link" to="/about">
+             <NavLink className="nav-link" to="/student/about">
                  A propos 
              </NavLink>
            </li>

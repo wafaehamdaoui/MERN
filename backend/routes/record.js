@@ -1,25 +1,46 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const mongoose =  require("mongoose");
+const passport =  require("passport");
+const bodyParser =  require("body-parser");
+const LocalStrategy =  require("passport-local");
 //const User =  require("../models/user");
 // recordRoutes is an instance of the express router.
 // We use it to define our routes.
 // The router will be added as a middleware and will take control of requests starting with path /record.
 const recordRoutes = express.Router();
- 
+
 // This will help us connect to the database
 const dbo = require("../db/conn");
  //Connecting database
 mongoose.connect("mongodb+srv://hasnae:eidia2019@cluster0.oyrevzp.mongodb.net/?retryWrites=true&w=majority");
-// This help convert the id from string to ObjectId for the _id.
+
+recordRoutes.use(bodyParser.urlencoded(
+      { extended:true }
+))
+recordRoutes.use(require("express-session")({
+  secret:"wafae",       //decode or encode session
+  resave: false,          
+  saveUninitialized:false    
+}));
+
 const ObjectId = require("mongodb").ObjectId;
- 
- let current;
+recordRoutes.use(passport.initialize());
+recordRoutes.use(passport.session());
+let current;
+
+function isLoggedIn(req,res,next) {
+  if(req.isAuthenticated()){
+      return next();
+  }else{
+    res.redirect("/login");
+  }
+}
 // This section will help you get a list of all the records.
-recordRoutes.route("/record").get(function (req, res) {
-  console.log("current user",current)
- let db_connect = dbo.getDb("demandes");
- db_connect
+recordRoutes.route("/record").get(isLoggedIn , function (req, res) {
+  console.log("req user",req.user)
+    let db_connect = dbo.getDb("demandes");
+    db_connect
    .collection("demandes")
    .find({})
    .toArray(function (err, result) {
@@ -28,7 +49,7 @@ recordRoutes.route("/record").get(function (req, res) {
    });
 });
 // This section will help you get a list of all the users.
-recordRoutes.route("/user").get(function (req, res) {
+recordRoutes.route("/user").get(isLoggedIn,function (req, res) {
   let db_connect = dbo.getDb("demandes");
   db_connect
     .collection("users")
@@ -75,7 +96,7 @@ recordRoutes.route("/user/:id").get(function (req, res) {
  });
  
 // This section will help you create a new record.
-recordRoutes.route("/record/add").post(function (req, response) {
+recordRoutes.route("/record/add").post(isLoggedIn,function (req, response) {
  let db_connect = dbo.getDb();
  let myobj = {
    matricul: req.body.matricul,
@@ -93,7 +114,7 @@ recordRoutes.route("/record/add").post(function (req, response) {
  });
 });
  
-recordRoutes.route("/register").post(function (req, response) {
+recordRoutes.route("/register").post(isLoggedIn,function (req, response) {
   let db_connect = dbo.getDb();
   let myobj = {
     matricul: req.body.matricul,
@@ -107,7 +128,7 @@ recordRoutes.route("/register").post(function (req, response) {
   });
  });
 // This section will help you update a record by id.
-recordRoutes.route("/update/:id").post(function (req, response) {
+recordRoutes.route("/update/:id").post(isLoggedIn,function (req, response) {
  let db_connect = dbo.getDb();
  let myquery = { _id: ObjectId(req.params.id) };
  let newvalues = {
@@ -132,7 +153,7 @@ recordRoutes.route("/update/:id").post(function (req, response) {
 });
 
 // This section will help you update a user by id.
-recordRoutes.route("/updateuser/:id").post(function (req, response) {
+recordRoutes.route("/updateuser/:id").post(isLoggedIn,function (req, response) {
   console.log("current user",current)
   let db_connect = dbo.getDb();
   let myquery = { _id: ObjectId(req.params.id) };
@@ -154,7 +175,7 @@ recordRoutes.route("/updateuser/:id").post(function (req, response) {
  });
  
 // This section will help you delete a record
-recordRoutes.route("/:id").delete((req, response) => {
+recordRoutes.route("/:id").delete(isLoggedIn ,(req, response) => {
  let db_connect = dbo.getDb();
  let myquery = { _id: ObjectId(req.params.id) };
  db_connect.collection("demandes").deleteOne(myquery, function (err, obj) {
@@ -165,7 +186,7 @@ recordRoutes.route("/:id").delete((req, response) => {
 });
 
 // This section will help you delete a user
-recordRoutes.route("/delete/:id").delete((req, response) => {
+recordRoutes.route("/delete/:id").delete(isLoggedIn,(req, response) => {
   let db_connect = dbo.getDb();
   let myquery = { _id: ObjectId(req.params.id) };
   db_connect.collection("users").deleteOne(myquery, function (err, obj) {

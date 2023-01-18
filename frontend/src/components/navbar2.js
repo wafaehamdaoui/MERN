@@ -5,15 +5,14 @@ import "bootstrap/dist/css/bootstrap.css";
  
 // We import NavLink to utilize the react router.
 import { NavLink } from "react-router-dom";
-import NavDropdown from 'react-bootstrap/NavDropdown';
  
 // Here, we display our Navbar
-export default function Navbar() {
+export default function Navbar2() {
  return (
    <div>
      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-       <NavLink className="navbar-brand" to="/">
-       <img style={{"width" : 80 + '%'}} src="logo.png"></img>
+       <NavLink className="navbar-brand" to="/admin">
+       <img style={{"width" : 80 + '%'}} src="logo.png" alt=""></img>
        </NavLink>
        <button
          className="navbar-toggler"
@@ -30,25 +29,18 @@ export default function Navbar() {
        <div className="collapse navbar-collapse" id="navbarSupportedContent">
          <ul className="navbar-nav mr-auto">
            <li className="nav-item ">
-           <NavLink className="nav-link" to="/">
+           <NavLink className="nav-link" to="/admin">
                Acceuil 
              </NavLink>
            </li>
+
            <li className="nav-item ">
-           <NavDropdown title="Demande" id="basic-nav-dropdown">
-              <NavDropdown.Item href="/create">Salle Sport</NavDropdown.Item>
-              <NavDropdown.Item href="/create">Terrain </NavDropdown.Item>
-              <NavDropdown.Item href="/create">Bibliothèque</NavDropdown.Item>
-              <NavDropdown.Item href="/create">Computer</NavDropdown.Item>
-            </NavDropdown>
-           </li>
-           <li className="nav-item ">
-             <NavLink className="nav-link" to="/record">
+             <NavLink className="nav-link" to="/admin/record">
                 Liste Demandes
              </NavLink>
            </li>
            <li className="nav-item ">
-             <NavLink className="nav-link" to="/about">
+             <NavLink className="nav-link" to="/admin/user">
                  Liste Utilisateurs 
              </NavLink>
            </li>

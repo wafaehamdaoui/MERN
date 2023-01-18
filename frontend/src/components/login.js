@@ -1,59 +1,60 @@
-import { useState } from 'react'
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'
 
 function Login() {
-	const [username, setUsername] = useState('')
-	const [password, setPassword] = useState('')
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
-	async function loginUser(event) {
-		event.preventDefault()
-
-		const response = await fetch('http://localhost:5000/login', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				username,
-				password,
-			}),
-		})
-
-		const data = await response.json()
-
-		if (data.user) {
-			localStorage.setItem('token', data.user)
-			alert('Login successful')
-			window.location.href = '/home'
-		} else {
-			alert('Please check your username and password')
-		}
-	}
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+        const response = await fetch('http://localhost:5000/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+        });
+        const data = await response.json();
+        console.log("data",data)
+        if (data) {
+          if(data.username==="admin"){
+            // redirect to the home page or wherever you want
+            navigate("/admin");
+          }else{
+            // redirect to the home page or wherever you want
+            navigate("/student");
+          }
+        } else {
+            alert("user or password not fount");
+        }
+    } catch (err) {
+        console.error(err);
+    }
+  };
 
   return (
-    <Form oonSubmit={loginUser} style={{display: "flex", flexDirection : "column", alignItems : "center" }}>
-      <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label>User Name</Form.Label>
-        <Form.Control type="text" placeholder="Enter username" 
-          value={username}
-          onChange={(event) => setUsername(event.target.value)}/>
-        
-      </Form.Group>
+    <form onSubmit={handleSubmit}>
+      <label htmlFor="username">Username:</label>
+      <input
+        type="text"
+        id="username"
+        name="username"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+      />
 
-      <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Password</Form.Label>
-        <Form.Control type="password" placeholder="Password" value={password}
-          onChange={(event) => setPassword(event.target.value)}/>
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="formBasicCheckbox">
-        <Form.Check type="checkbox" label="Check me out" />
-      </Form.Group>
-      <Button variant="primary" type="submit">
-        Submit
-      </Button>
-    </Form>
+      <label htmlFor="password">Password:</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+
+      <input type="submit" value="Login" />
+    </form>
   );
 }
 
-export default Login
+export default Login;

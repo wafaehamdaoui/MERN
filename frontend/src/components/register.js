@@ -3,9 +3,10 @@ import { useNavigate } from 'react-router-dom'
 
 export default function Register() {
 	const [form, setForm] = useState({
-	  username:"",
-	  email: "",
-	  password: "",
+		matricul:"",
+	    username:"",
+	    email: "",
+	    password: "",
 	});
 	const navigate = useNavigate();
 	
@@ -36,6 +37,7 @@ export default function Register() {
 	  });
 	
 	  setForm({ 
+	  matricul:"",
 	  username:"",
 	  email: "",
 	  password: "", });
@@ -50,6 +52,13 @@ export default function Register() {
 					onChange={(e) => updateForm({ username: e.target.value })}
 					type="text"
 					placeholder="username"
+				/>
+				<br />
+				<input
+					value={form.matricul}
+					onChange={(e) => updateForm({ matricul: e.target.value })}
+					type="text"
+					placeholder="matricul"
 				/>
 				<br />
 				<input
