@@ -1,11 +1,10 @@
 const mongoose = require('mongoose')
-
+mongoose.connect("mongodb+srv://hasnae:eidia2019@cluster0.oyrevzp.mongodb.net/?retryWrites=true&w=majority")
 const User = new mongoose.Schema(
 	{
-		name: { type: String, required: true },
+		username: { type: String, required: true },
 		email: { type: String, required: true, unique: true },
 		password: { type: String, required: true },
-		quote: { type: String },
 	},
 	{ collection: 'user-data' }
 )
