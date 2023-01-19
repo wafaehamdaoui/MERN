@@ -11,8 +11,9 @@ function Login() {
     try {
         const response = await fetch('http://localhost:5000/login', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', },
         body: JSON.stringify({ username, password }),
+        credentials:"same-origin"
         });
         const data = await response.json();
         console.log("data",data)
@@ -33,27 +34,36 @@ function Login() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="username">Username:</label>
+    <div>
+      <h2 style={{marginLeft:"39%",marginTop:"5%"}}> Page de Connexion</h2>
+      <img src="login.jpg" style={{width:"10%",marginLeft:"50%",marginTop:"2%"}}></img>
+      <form onSubmit={handleSubmit} style={{display: "flex", flexDirection : "column", alignItems : "center" }}>
+      <label htmlFor="username">Nom d'Utilisateur</label>
       <input
+        class="form-control"
         type="text"
         id="username"
         name="username"
         value={username}
+        placeholder="username"
         onChange={(e) => setUsername(e.target.value)}
+        style={{ width: "23%",marginBottom:"2%"}}
       />
 
-      <label htmlFor="password">Password:</label>
+      <label htmlFor="password">Mot de Passe</label>
       <input
+        class="form-control"
         type="password"
         id="password"
         name="password"
         value={password}
+        placeholder="password"
         onChange={(e) => setPassword(e.target.value)}
+        style={{ width: "23%", marginBottom:"2%"}}
       />
-
-      <input type="submit" value="Login" />
+      <input  type="submit" value=" Se Connecter" style={{ cursor: "pointer"}} />
     </form>
+    </div>
   );
 }
 

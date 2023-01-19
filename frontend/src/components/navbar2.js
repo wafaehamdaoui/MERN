@@ -8,6 +8,11 @@ import { NavLink } from "react-router-dom";
  
 // Here, we display our Navbar
 export default function Navbar2() {
+  async function handleLogout() {
+    await fetch(`http://localhost:5000/logout`, {
+      method: "post"
+    });
+  }
  return (
    <div>
      <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -33,7 +38,11 @@ export default function Navbar2() {
                Acceuil 
              </NavLink>
            </li>
-
+           <li className="nav-item ">
+             <NavLink className="nav-link" to="/admin/register">
+                Créer Utilisateur
+             </NavLink>
+           </li>
            <li className="nav-item ">
              <NavLink className="nav-link" to="/admin/record">
                 Liste Demandes

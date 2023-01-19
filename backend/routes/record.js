@@ -1,8 +1,6 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const mongoose =  require("mongoose");
-const passport =  require("passport");
-const bodyParser =  require("body-parser");
 const LocalStrategy =  require("passport-local");
 //const User =  require("../models/user");
 // recordRoutes is an instance of the express router.
@@ -15,34 +13,34 @@ const dbo = require("../db/conn");
  //Connecting database
 mongoose.connect("mongodb+srv://hasnae:eidia2019@cluster0.oyrevzp.mongodb.net/?retryWrites=true&w=majority");
 
-recordRoutes.use(bodyParser.urlencoded(
-      { extended:true }
-))
-recordRoutes.use(require("express-session")({
-  secret:"wafae",       //decode or encode session
-  resave: false,          
-  saveUninitialized:false    
-}));
-
 const ObjectId = require("mongodb").ObjectId;
-recordRoutes.use(passport.initialize());
-recordRoutes.use(passport.session());
-let current;
+var current = undefined;
 
 function isLoggedIn(req,res,next) {
-  if(req.isAuthenticated()){
-      return next();
+  if(current){
+    return next();
   }else{
-    res.redirect("/login");
+    return res.status(401).json('unauthorize')
   }
 }
 // This section will help you get a list of all the records.
-recordRoutes.route("/record").get(isLoggedIn , function (req, res) {
-  console.log("req user",req.user)
+recordRoutes.route("/record").get(isLoggedIn, function (req, res) {
+  console.log("req.user from",req.user)
     let db_connect = dbo.getDb("demandes");
     db_connect
    .collection("demandes")
    .find({})
+   .toArray(function (err, result) {
+     if (err) throw err;
+     res.json(result);
+   });
+});
+recordRoutes.route("/userRecord").get(isLoggedIn, function (req, res) {
+  console.log("req.user from",req.user)
+    let db_connect = dbo.getDb("demandes");
+    db_connect
+   .collection("demandes")
+   .find({matricul:current.matricul})
    .toArray(function (err, result) {
      if (err) throw err;
      res.json(result);
@@ -66,14 +64,27 @@ recordRoutes.route("/login").post(function (req, res) {
   db_connect.collection("users")?.findOne({username:username,password:password}, function (err, result) {
     if (err) throw err;
     res.json(result);
+    req.user=result;
+    current=result;
+    req.session.save();
     console.log("result",result)
+    console.log("req.user",req.user)
   });
-  current=username
 });
+
+recordRoutes.route("/logout").post(isLoggedIn, async (req, res) => {
+  current = undefined;
+  //req.session.destroy((error) => {
+    //if (error) throw error
+    //res.clearCookie('session-id') // cleaning the cookies from the user session
+    //res.status(200).send('Logout Success')
+  //})
+})
+
 
 
 // This section will help you get a single record by id
-recordRoutes.route("/record/:id").get(function (req, res) {
+recordRoutes.route("/record/:id").get(isLoggedIn,function (req, res) {
  let db_connect = dbo.getDb("demandes");
  let myquery = { _id: ObjectId(req.params.id) };
  db_connect
@@ -84,7 +95,7 @@ recordRoutes.route("/record/:id").get(function (req, res) {
    });
 });
 // This section will help you get a single user by id
-recordRoutes.route("/user/:id").get(function (req, res) {
+recordRoutes.route("/user/:id").get(isLoggedIn,function (req, res) {
   let db_connect = dbo.getDb("demandes");
   let myquery = { _id: ObjectId(req.params.id) };
   db_connect
@@ -108,10 +119,14 @@ recordRoutes.route("/record/add").post(isLoggedIn,function (req, response) {
    date: req.body.date,
    status: req.body.status,
  };
- db_connect.collection("demandes").insertOne(myobj, function (err, res) {
-   if (err) throw err;
-   response.json(res);
- });
+ db_connect.collection("demandes").findOne({ressource:myobj.ressource,date:myobj.date,duree:myobj.duree}, function (err, res) {
+  if (!res){
+    db_connect.collection("demandes").insertOne(myobj, function (err, res) {
+      if (err) throw err;
+      response.json(res);
+    });
+  }
+});
 });
  
 recordRoutes.route("/register").post(isLoggedIn,function (req, response) {
@@ -122,9 +137,13 @@ recordRoutes.route("/register").post(isLoggedIn,function (req, response) {
     email: req.body.email,
     password: req.body.password,
   };
-  db_connect.collection("users").insertOne(myobj, function (err, res) {
-    if (err) throw err;
-    response.json(res);
+  db_connect.collection("users").findOne({matricul:myobj.matricul,username:myobj.username,email:myobj.email}, function (err, res) {
+    if (!res){
+      db_connect.collection("users").insertOne(myobj, function (err, res) {
+        if (err) throw err;
+        response.json(res);
+      });
+    }
   });
  });
 // This section will help you update a record by id.
@@ -175,7 +194,7 @@ recordRoutes.route("/updateuser/:id").post(isLoggedIn,function (req, response) {
  });
  
 // This section will help you delete a record
-recordRoutes.route("/:id").delete(isLoggedIn ,(req, response) => {
+recordRoutes.route("/:id").delete(isLoggedIn,(req, response) => {
  let db_connect = dbo.getDb();
  let myquery = { _id: ObjectId(req.params.id) };
  db_connect.collection("demandes").deleteOne(myquery, function (err, obj) {

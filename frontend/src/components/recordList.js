@@ -13,7 +13,7 @@ const Record = (props) => (
    <td>{props.record.date}</td>
    <td>{props.record.status}</td>
    <td>
-     <Link className="btn btn-link" to={`/student/edit/${props.record._id}`}>Edit</Link> |
+     <Link className="btn btn-link" to={`/admin/edit/${props.record._id}`}>Edit</Link> |
      <button className="btn btn-link"
        onClick={() => {
          props.deleteRecord(props.record._id);

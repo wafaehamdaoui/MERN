@@ -49,7 +49,7 @@ export default function Create() {
    duree: "",
    date: "",
    status: "En Attente", });
-   navigate("/");
+   navigate("/student/record");
  }
  
  // This following section will display the form that takes the input from the user.

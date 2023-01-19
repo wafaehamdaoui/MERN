@@ -1,5 +1,4 @@
 import React from "react";
- 
 // We import bootstrap to make our application look better.
 import "bootstrap/dist/css/bootstrap.css";
  
@@ -10,6 +9,11 @@ import { Image } from "react-bootstrap";
  
 // Here, we display our Navbar
 export default function Navbar() {
+  async function handleLogout() {
+    await fetch(`http://localhost:5000/logout`, {
+      method: "post"
+    });
+  }
  return (
    <div>
      <nav className="navbar navbar-expand-lg navbar-light bg-light">

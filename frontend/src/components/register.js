@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React,{ useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 export default function Register() {
@@ -41,41 +41,53 @@ export default function Register() {
 	  username:"",
 	  email: "",
 	  password: "", });
-	  navigate("/login");
+	  navigate("/admin");
 }
 	return (
 		<div>
-			<h1>Register</h1>
-			<form onSubmit={onSubmit}>
+			<h1 style={{marginLeft:"34%",marginTop:"5%"}}>Créer Nouveau Utilisateur </h1>
+			<form onSubmit={onSubmit} style={{display: "flex", flexDirection : "column", alignItems : "center",marginTop:"5%" }}>
+			<label htmlFor="username" >Nom d'Utilisateur</label>
 				<input
+				    class="form-control"
 					value={form.username}
 					onChange={(e) => updateForm({ username: e.target.value })}
 					type="text"
 					placeholder="username"
+					style={{ width: "40%",marginLeft:"5%"}}
 				/>
 				<br />
+				<label htmlFor="matricul">Matricule</label>
 				<input
+				    class="form-control"
 					value={form.matricul}
 					onChange={(e) => updateForm({ matricul: e.target.value })}
 					type="text"
 					placeholder="matricul"
+					style={{ width: "40%",marginLeft:"5%"}}
 				/>
 				<br />
+				<label htmlFor="email">Email</label>
 				<input
+				    class="form-control"
 					value={form.email}
 					onChange={(e) => updateForm({ email: e.target.value })}
 					type="email"
 					placeholder="Email"
+					style={{ width: "40%",marginLeft:"5%"}}
 				/>
 				<br />
+				<label htmlFor="password">Mot de Passe</label>
 				<input
+				    class="form-control"
 					value={form.password}
 					onChange={(e) => updateForm({ password: e.target.value })}
 					type="password"
 					placeholder="Password"
+					style={{ width: "40%",marginLeft:"5%"}}
 				/>
 				<br />
-				<input type="submit" value="Register" />
+				<input type="submit" value="Ajouter" style={{padding:"5px 15px"}}/>
 			</form>
 		</div>
 	)

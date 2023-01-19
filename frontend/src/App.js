@@ -13,8 +13,10 @@ import Edit from "./components/edit";
 import Create from "./components/create";
 import About from "./components/about";
 import UserList from "./components/userList";
+import UserRecord from "./components/userRecords";
 import Update from "./components/update";
 import Register from "./components/register";
+import EditMe from "./components/editme"
  
 const App = () => {
  return (
@@ -24,8 +26,8 @@ const App = () => {
 	     <Route exact path="/" element={<Login />} />
        <Route path="/admin" element={<Admin />} />
        <Route path="/student" element={<Student />} />
-       <Route path="student/record/" element={<RecordList />} />
-       <Route path="student/edit/:id" element={<Edit />} />
+       <Route path="student/record/" element={<UserRecord />} />
+       <Route path="student/edit/:id" element={<EditMe />} />
        <Route path="student/create" element={<Create />} />
        <Route path="student/about" element={<About />} />
        
@@ -33,6 +35,7 @@ const App = () => {
        <Route path="admin/user/" element={<UserList />} />
        <Route path="admin/update/:id" element={<Update />} />
        <Route path="admin/register" element={<Register />} />
+       <Route path="admin/edit/:id" element={<Edit />} />
      </Routes>
    </div>
  );
