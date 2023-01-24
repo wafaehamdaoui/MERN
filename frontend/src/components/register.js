@@ -23,30 +23,37 @@ export default function Register() {
 	
 	  // When a post request is sent to the create url, we'll add a new record to the database.
 	  const newUser = { ...form };
-	
-	  await fetch("https://uemf-ressources-api-4150.onrender.com/register", {
+	    try{
+	    const res = await fetch("https://uemf-ressources-api-4150.onrender.com/register", {
 		method: "POST",
 		headers: {
 		  "Content-Type": "application/json",
 		},
 		body: JSON.stringify(newUser),
 	  })
-	  .catch(error => {
+	  const data = await res.json();
+      if(data.error){
+         alert(data.error)
+		 navigate("/admin/register");
+      }else{
+       navigate("/admin/user");
+      }
+	}catch(error){
 		window.alert(error);
+		navigate("/admin");
 		return;
-	  });
+	  };
 	
 	  setForm({ 
 	  matricul:"",
 	  username:"",
 	  email: "",
 	  password: "", });
-	  navigate("/admin");
 }
 	return (
 		<div>
 			<h1 style={{marginLeft:"34%",marginTop:"5%"}}>Créer Nouveau Utilisateur </h1>
-			<form onSubmit={onSubmit} style={{display: "flex", flexDirection : "column", alignItems : "center",marginTop:"5%" }}>
+			<form onSubmit={onSubmit} style={{display: "flex", flexDirection : "column", alignItems : "center",marginTop:"3%" }}>
 			<label htmlFor="username" >Nom d'Utilisateur</label>
 				<input
 				    class="form-control"
