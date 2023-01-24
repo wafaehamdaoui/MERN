@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom'
 const Record = (props) => (
  <tr>
@@ -14,13 +14,13 @@ const Record = (props) => (
    <td>{props.record.date}</td>
    <td>{props.record.status}</td>
    <td>
-     <Link className="btn btn-link" to={`/student/edit/${props.record._id}`}>Edit</Link> |
+     <Link className="btn btn-link" to={`/student/edit/${props.record._id}`}>Editer</Link> |
      <button className="btn btn-link"
        onClick={() => {
          props.deleteRecord(props.record._id);
        }}
      >
-       Delete
+       Annuler
      </button>
    </td>
  </tr>
@@ -77,8 +77,8 @@ export default function UserRecord() {
  // This following section will display the table with the records of individuals.
  return (
    <div>
-     <h3 style={{marginTop:"1.5%" , marginLeft:"40%"}}>Mes Demandes  
-     <Button href="/student" style={{marginLeft:"65%"}}>Acceuil</Button></h3>
+     <h3 style={{marginTop:"1.5%" , marginLeft:"39%"}}>Mes Demandes  
+     <Button href="/student" style={{marginLeft:"55%",backgroundColor:"green"}}>Retourne à l'Acceuil</Button></h3>
      <table className="table table-striped" style={{ marginTop: 20 }}>
        <thead>
          <tr>
@@ -90,9 +90,8 @@ export default function UserRecord() {
            <th>Ressource</th>
            <th>Durée</th>
            <th>Date</th>
-
-           <th>Status</th>
-           <th>Action</th>
+           <th>Statut</th>
+           <th>Actions</th>
          </tr>
        </thead>
        <tbody>{recordList()}</tbody>
