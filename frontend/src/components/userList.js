@@ -28,7 +28,7 @@ export default function UserList() {
  // This method fetches the records from the database.
  useEffect(() => {
    async function getUsers() {
-     const response = await fetch(`http://localhost:5000/user/`);
+     const response = await fetch(`https://uemf-ressources-api-4150.onrender.com/user/`);
  
      if (!response.ok) {
        const message = `An error occurred: ${response.statusText}`;
@@ -48,7 +48,7 @@ export default function UserList() {
  
  // This method will delete a record
  async function deleteUser(id) {
-   await fetch(`http://localhost:5000/delete/${id}`, {
+   await fetch(`https://uemf-ressources-api-4150.onrender.com/delete/${id}`, {
      method: "DELETE"
    });
  
