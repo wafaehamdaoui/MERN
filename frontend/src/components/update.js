@@ -56,70 +56,68 @@ export default function Update() {
    };
  
    // This will send a post request to update the data in the database.
-   await fetch(`https://uemf-ressources-api-4150.onrender.com/updateuser/${params.id}`, {
+   const res=await fetch(`https://uemf-ressources-api-4150.onrender.com/updateuser/${params.id}`, {
      method: "POST",
      body: JSON.stringify(editedPerson),
      headers: {
        'Content-Type': 'application/json'
      },
    });
- 
-   navigate("/admin/user");
+   const data = await res.json();
+   if(data.error){
+    alert(data.error)
+   }else{
+    navigate("/admin/user");
+   }
  }
  
  // This following section will display the form that takes input from the user to update the data.
  return (
   <div>
-  <h3 style={{marginLeft:"20%"}}>  Modifier un Utilisateur</h3>
-  <form onSubmit={onSubmit}>
-    <div className="col-md-6" style={{marginLeft:"20%"}}>
-      <label htmlFor="matricul" >Matricul</label>
-      <input
-        type="text"
-        className="form-control"
-        id="matricul"
-        value={form.matricul}
-        onChange={(e) => updateForm({ matricul: e.target.value })}
-      />
-    </div>
-    <div className="col-md-6" style={{marginLeft:"20%"}}>
-      <label htmlFor="nom" >Nom d'Utilisateur</label>
-      <input
-        type="text"
-        className="form-control"
-        id="nom"
-        value={form.username}
-        onChange={(e) => updateForm({ username: e.target.value })}
-      />
-    </div>
-    <div className="col-md-6" style={{marginLeft:"20%"}}>
-      <label htmlFor="email">Email</label>
-      <input
-        type="email"
-        className="form-control"
-        id="email"
-        value={form.email}
-        onChange={(e) => updateForm({ email: e.target.value })}
-      />
-    </div>
-    <div className="col-md-6" style={{marginLeft:"20%"}}>
-      <label htmlFor="password">Password</label>
-      <input
-        type="password"
-        className="form-control"
-        id="password"
-        value={form.password}
-        onChange={(e) => updateForm({ password: e.target.value })}
-      />
-    </div>
-    <div className="col-md-4" style={{marginLeft:"40%",marginTop:"2%"}}>
-      <input
-        type="submit"
-        value="Effectuer Modification"
-        className="btn btn-primary"
-      />
-    </div>
-  </form>
-</div>
+			<h1 style={{marginLeft:"36%",marginTop:"5%"}}>Modifier Utilisateur </h1>
+			<form onSubmit={onSubmit} style={{display: "flex", flexDirection : "column", alignItems : "center",marginTop:"3%" }}>
+			<label htmlFor="username" >Nom d'Utilisateur</label>
+				<input
+				    class="form-control"
+					value={form.username}
+					onChange={(e) => updateForm({ username: e.target.value })}
+					type="text"
+					placeholder="username"
+					style={{ width: "40%",marginLeft:"2%"}}
+				/>
+				<br />
+				<label htmlFor="matricul">Matricule</label>
+				<input
+				    class="form-control"
+					value={form.matricul}
+					onChange={(e) => updateForm({ matricul: e.target.value })}
+					type="text"
+					placeholder="matricul"
+					style={{ width: "40%",marginLeft:"2%"}}
+				/>
+				<br />
+				<label htmlFor="email">Email</label>
+				<input
+				    class="form-control"
+					value={form.email}
+					onChange={(e) => updateForm({ email: e.target.value })}
+					type="email"
+					placeholder="Email"
+					style={{ width: "40%",marginLeft:"2%"}}
+				/>
+				<br />
+				<label htmlFor="password">Mot de Passe</label>
+				<input
+				    class="form-control"
+					value={form.password}
+					onChange={(e) => updateForm({ password: e.target.value })}
+					type="password"
+					placeholder="Password"
+					style={{ width: "40%",marginLeft:"2%"}}
+				/>
+				<br />
+				<input type="submit" value="Modifier" style={{padding:"5px 15px"}}/>
+			</form>
+		</div>
  );
 }
