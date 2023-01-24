@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
-
 import Form from 'react-bootstrap/Form';
-import { Link } from "react-router-dom";
  
 export default function Edit() {
  const [form, setForm] = useState({
@@ -54,7 +52,7 @@ export default function Edit() {
  
  async function onSubmit(e) {
    e.preventDefault();
-   const editedPerson = {
+   const editedDemande = {
      matricul: form.matricul,
      nom: form.nom,
      prenom: form.prenom,
@@ -66,21 +64,26 @@ export default function Edit() {
    };
  
    // This will send a post request to update the data in the database.
-   await fetch(`https://uemf-ressources-api-4150.onrender.com/update/${params.id}`, {
+   
+   const res=await fetch(`https://uemf-ressources-api-4150.onrender.com/update/${params.id}`, {
      method: "POST",
-     body: JSON.stringify(editedPerson),
+     body: JSON.stringify(editedDemande),
      headers: {
        'Content-Type': 'application/json'
      },
    });
- 
-   navigate("/student/record");
+   const data = await res.json();
+   if(data.error){
+    alert(data.error)
+   }else{
+    navigate("/student/record");
+   }
  }
  
  // This following section will display the form that takes input from the user to update the data.
  return (
   <div>
-  <h3 style={{marginLeft:"20%"}}>  Modifier une Demande</h3>
+  <h3 style={{marginTop:"4%" , marginLeft:"34%"}}>  Modifier ma Demande</h3>
   
   <form onSubmit={onSubmit}>
     <div className="col-md-6" style={{marginLeft:"20%"}}>
@@ -193,14 +196,27 @@ export default function Edit() {
     </div>
     <label htmlFor="resource" style={{marginLeft:"20%"}}>Durée</label>
     <div className="col-md-6" style={{marginLeft:"20%"}}>
-                     <Form.Group controlId="duedate" >
-                         <Form.Control type="time" name="time" placeholder="Due time" onSelect={(e) => updateForm({ duree: e.target.value })} />
-                     </Form.Group>
-     </div>
+         <Form.Select aria-label="Default select example" onSelect={(e) => updateForm({ duree: e.target.value })} onChange={(e) => updateForm({ duree: e.target.value })}>
+            <option>Selectionner une durée </option>
+         <option value="09:00 -- 10:00" selected={form.duree === "09:00 -- 10:00"}>09:00 -- 10:00</option>
+         <option value="10:00 -- 11:00" selected={form.duree === "10:00 -- 11:00"}>10:00 -- 11:00</option>
+         <option value="11:00 -- 12:00" selected={form.duree === "11:00 -- 12:00"}>11:00 -- 12:00</option>
+         <option value="12:00 -- 13:00" selected={form.duree === "12:00 -- 13:00"}>12:00 -- 13:00</option>
+         <option value="13:00 -- 14:00" selected={form.duree === "13:00 -- 14:00"}>13:00 -- 14:00</option>
+         <option value="14:00 -- 15:00" selected={form.duree === "14:00 -- 15:00"}>14:00 -- 15:00</option>
+         <option value="15:00 -- 16:00" selected={form.duree === "15:00 -- 16:00"}>15:00 -- 16:00</option>
+         <option value="16:00 -- 17:00" selected={form.duree === "16:00 -- 17:00"}>16:00 -- 17:00</option>
+         <option value="17:00 -- 18:00" selected={form.duree === "17:00 -- 18:00"}> 17:00 -- 18:00</option>
+         <option value="18:00 -- 19:00" selected={form.duree === "18:00 -- 19:00"}> 18:00 -- 19:00</option>
+         <option value="19:00 -- 20:00" selected={form.duree === "19:00 -- 20:00"}>19:00 -- 20:00</option>
+         <option value="20:00 -- 21:00" selected={form.duree === "20:00 -- 21:00"}> 20:00 -- 21:00</option>
+         <option value="21:00 -- 22:00" selected={form.duree === "21:00 -- 22:00"}>21:00 -- 22:00</option> 
+          </Form.Select>
+       </div>
     <label htmlFor="resource" style={{marginLeft:"20%"}}>Date</label>
     <div className="col-md-6" style={{marginLeft:"20%"}}>
                      <Form.Group controlId="duedate" >
-                         <Form.Control type="date" name="date" placeholder="Due date" onSelect={(e) => updateForm({ date: e.target.value })}/>
+                         <Form.Control value={form.date} type="date" name="date" placeholder="Due date" onSelect={(e) => updateForm({ date: e.target.value })} onChange={(e) => updateForm({ date: e.target.value })}/>
                      </Form.Group>
                  </div>
     <div className="col-md-4" style={{marginLeft:"40%",marginTop:"2%"}}>
