@@ -17,7 +17,7 @@ export default function Navbar() {
  return (
    <div>
      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-       <NavLink className="navbar-brand" to="/">
+       <NavLink className="navbar-brand" to="/student">
        <Image style={{"width" : 80 + '%'}} src="logo.png"></Image>
        </NavLink>
        <button
@@ -53,7 +53,7 @@ export default function Navbar() {
              </NavLink>
            </li>
            <li className="nav-item ">
-             <NavLink className="nav-link" to="/student/about">
+             <NavLink className="nav-link" to="/about">
                  A propos 
              </NavLink>
            </li>
