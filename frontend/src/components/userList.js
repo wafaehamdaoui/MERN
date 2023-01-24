@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
- 
+import { Button } from "react-bootstrap";
+
 const User = (props) => (
  <tr>
    <td>{props.record._id}</td>
@@ -72,16 +73,19 @@ export default function UserList() {
  // This following section will display the table with the records of individuals.
  return (
    <div>
-     <h3>Users List</h3>
+     <h3 style={{marginTop:"1.5%" , marginLeft:"39%"}}>Liste d'Utilisateurs
+     <Button href="/admin" style={{marginLeft:"50%", backgroundColor:"green"}}>Retourne à l'Acceuil</Button>
+     </h3>
+    
      <table className="table table-striped" style={{ marginTop: 20 }}>
        <thead>
          <tr>
          <th>Id_User</th>
-           <th>Matricul</th>
+           <th>Matricule</th>
            <th>Nom</th>
            <th>Email</th>
            <th>Password</th>
-           <th>Action</th>
+           <th>Actions</th>
          </tr>
        </thead>
        <tbody>{userList()}</tbody>
